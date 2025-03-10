@@ -14,8 +14,8 @@ _component_func = components.declare_component(
 
 def st_copy_to_clipboard(
     text: str,
-    before_copy_label: str = "📋",
-    after_copy_label: str = "✅",
+    before_copy_label: str = "Copy to clipboard 📋",
+    after_copy_label: str = "Text copied ✅",
     show_text: bool = False,
     key: Optional[str] = None,
 ):
@@ -45,11 +45,58 @@ def st_copy_to_clipboard(
 
     return component_value
 
+# def st_copy_to_clipboard(
+#     text: str,
+#     before_copy_label: str = "Copy to clipboard 📋",
+#     after_copy_label: str = "Text copied ✅",
+#     show_text: bool = False,
+#     key: Optional[str] = None,
+#     text_color: Optional[str] = None,  # Optional parameter for text color
+# ):
+#     """
+#     Streamlit component to copy text to clipboard.
+
+#     Parameters
+#     ----------
+#     text : str
+#         The text to be copied to the clipboard.
+#     before_copy_label : str
+#         Label of the button before text is copied.
+#     after_copy_label : str
+#         Label of the button after text is copied.
+#     show_text: bool
+#         If True, show text right before the button and make it clickable as well.
+#     key : str or None
+#         An optional key that uniquely identifies the component.
+#     text_color : str or None
+#         The color of the text (e.g., "red", "#FF5733", etc.). If None, default color is used.
+#     """
+    
+#     # If a text color is provided, apply it to the text using markdown
+#     if text_color:
+#         text = f'<span style="color:{text_color}">{text}</span>'
+#     else:
+#         text = f'<span>{text}</span>'
+
+#     # Display the text before the button if show_text is True
+#     if show_text:
+#         show_text = st.markdown(text, unsafe_allow_html=True)
+    
+#     # Component logic for copying to clipboard
+#     component_value = _component_func(
+#         key=key,
+#         text=text,
+#         before_copy_label=before_copy_label,
+#         after_copy_label=after_copy_label,
+#         show_text=show_text,
+#     )
+
+#     return component_value
+
 
 def main():
     st.write("## Example")
     text = st.text_input("Enter text to copy to clipboard", value="Hello World")
-    st_copy_to_clipboard(text)
     st_copy_to_clipboard(text, before_copy_label='📋Push to copy', after_copy_label='✅Text copied!')
     st_copy_to_clipboard(text, before_copy_label='Push to copy', after_copy_label='Text copied!', show_text=True)
 
