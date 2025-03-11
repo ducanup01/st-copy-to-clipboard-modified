@@ -35,13 +35,15 @@ def st_copy_to_clipboard(
     key : str or None
         An optional key that uniquely identifies the component.
     """
+    component_value = _component_func(
+        key=key,
+        text=text,
+        before_copy_label=before_copy_label,
+        after_copy_label=after_copy_label,
+        show_text=show_text,
+    )
 
-    # Streamlit button to trigger copy
-    if st.button("Copy to Clipboard"):
-        components.html(
-            "<script>Streamlit.events.copyTrigger.dispatchEvent(new Event('copyTrigger'));</script>",
-            height=150
-        )
+    return component_value
 
 def main():
     st.write("## Example")
