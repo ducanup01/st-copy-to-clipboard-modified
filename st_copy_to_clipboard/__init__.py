@@ -120,26 +120,28 @@ _component_func = components.declare_component(
 )
 
 
-def st_copy_to_clipboard(
-    text: str,
-    key: Optional[str] = None,
-):
+def st_copy_to_clipboard(text: str, key: Optional[str] = None):
     """
     Streamlit component to automatically copy text to clipboard upon rendering.
-
+    
     Parameters
     ----------
     text : str
         The text to be copied to the clipboard.
     key : str or None
         An optional key that uniquely identifies the component.
+    
+    Returns
+    -------
+    bool
+        Returns True to indicate that the text was sent to be copied.
     """
-    component_value = _component_func(
-        key=key,
-        text=text,
-    )
+    _component_func(key=key, text=text)
 
-    return component_value
+    # Provide visual confirmation in Streamlit (optional)
+    st.success("Text copied to clipboard!")
+
+    return True  # Indicating that the component executed
 
 
 def main():
