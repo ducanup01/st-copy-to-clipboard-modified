@@ -110,9 +110,28 @@ function onRender(event) {
 }
 
 
-// Render the component whenever python send a "render event"
-Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender)
-// Tell Streamlit that the component is ready to receive events
-Streamlit.setComponentReady()
-// Render with the correct height, if this is a fixed-height component
-Streamlit.setFrameHeight(68)
+document.addEventListener("DOMContentLoaded", function () {
+  const copyButton = document.getElementById("copy-button");
+  const textElement = document.getElementById("text-element");
+
+  // Function to copy text to clipboard
+  function copyToClipboard() {
+      const text = textElement.innerText || textElement.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+          console.log("Copied to clipboard:", text);
+      }).catch(err => {
+          console.error("Failed to copy:", err);
+      });
+  }
+
+  // Attach event listener to button
+  copyButton.addEventListener("click", copyToClipboard);
+
+  // Listen for Streamlit trigger
+  Streamlit.events.addEventListener("copyTrigger", function () {
+      copyButton.click();  // Simulate button click
+  });
+
+  // Notify Streamlit that the component is ready
+  Streamlit.setComponentReady();
+});
