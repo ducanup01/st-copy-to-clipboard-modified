@@ -58,23 +58,24 @@
 // Streamlit.setFrameHeight(68)
 
 function onRender(event) {
-  if (!window.rendered) {
-    const { text, after_copy_label } = event.detail.args;
+  const { text, should_copy } = event.detail.args; // Get data from Python
 
-    // Copy text to clipboard automatically
+  if (should_copy) { // Only copy if Python sends True
     navigator.clipboard.writeText(text).then(() => {
-      console.log(after_copy_label); // Log success message if needed
+      console.log("Text copied successfully!"); // Log success
+      Streamlit.setComponentValue(true); // Notify Streamlit the copy was successful
     }).catch(err => {
-      console.error('Failed to copy text: ', err);
+      console.error("Failed to copy text: ", err);
+      Streamlit.setComponentValue(false); // Notify Streamlit that the copy failed
     });
-
-    window.rendered = true;
   }
 }
 
-// Render the component whenever Python sends a "render event"
+// Listen for render events
 Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
-// Tell Streamlit that the component is ready to receive events
+
+// Notify Streamlit that the component is ready
 Streamlit.setComponentReady();
-// Render with the correct height, if this is a fixed-height component
+
+// Set component height
 Streamlit.setFrameHeight(20);
