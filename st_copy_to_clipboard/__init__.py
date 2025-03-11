@@ -35,8 +35,6 @@ def st_copy_to_clipboard(
     key : str or None
         An optional key that uniquely identifies the component.
     """
-        # Load your custom component
-    st.components.v1.html(open("index.html").read(), height=100)
 
     # Streamlit button to trigger copy
     if st.button("Copy to Clipboard"):
