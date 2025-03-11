@@ -77,9 +77,10 @@ def st_copy_to_clipboard(
     after_copy_label: str = "Text copied ✅",
     show_text: bool = False,
     key: Optional[str] = None,
+    trigger_button_label: str = "Copy"
 ):
     """
-    Streamlit component to copy text to clipboard.
+    Streamlit component to copy text to clipboard when a button is clicked.
 
     Parameters
     ----------
@@ -90,19 +91,22 @@ def st_copy_to_clipboard(
     after_copy_label : str
         Label of the button after text is copied.
     show_text: bool
-        If True, show text right before the button and make it clickable as well
+        If True, show text right before the button and make it clickable as well.
     key : str or None
         An optional key that uniquely identifies the component.
+    trigger_button_label: str
+        Label for the button that triggers the copy action.
     """
-    component_value = _component_func(
-        key=key,
-        text=text,
-        before_copy_label=before_copy_label,
-        after_copy_label=after_copy_label,
-        show_text=show_text,
-    )
-
-    return component_value
+    if st.button(trigger_button_label, key=f"button_{key}"):
+        component_value = _component_func(
+            key=key,
+            text=text,
+            before_copy_label=before_copy_label,
+            after_copy_label=after_copy_label,
+            show_text=show_text,
+        )
+        return component_value
+    return None
 
 def main():
     st.write("## Example")
